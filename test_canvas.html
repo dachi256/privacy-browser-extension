@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head><title>Canvas Test</title></head>
+<body>
+  <h1>Canvas Fingerprint Test</h1>
+  <canvas id="myCanvas" width="200" height="50" style="border:1px solid #000;"></canvas>
+  <br>
+  <!-- Button still calls the inline function -->
+  <button onclick="runTest()">Get Fingerprint & Compare</button>
+  <p>Current Result:</p>
+  <pre id="output" style="word-wrap: break-word;">Loading...</pre>
+  <p>Comparison to Previous:</p>
+  <pre id="comparisonOutput" style="font-weight: bold;">Loading...</pre>
+
+  <!-- Inline Script Block for Testing -->
+  <script>
+    // Variable to store the previous data URL for comparison
+    let previousDataUrl = null;
+
+    function runTest() {
+      const canvas = document.getElementById('myCanvas');
+      const outputElement = document.getElementById('output');
+      const comparisonElement = document.getElementById('comparisonOutput');
+      const ctx = canvas.getContext('2d');
+
+      // Simple drawing that should be consistent before noise
+      ctx.fillStyle = "rgb(255,0,255)";
+      ctx.beginPath();
+      ctx.rect(20, 10, 150, 30);
+      ctx.fill();
+      ctx.fillStyle = "rgb(0,255,255)";
+      ctx.font = "16pt Arial";
+      ctx.fillText("Hello!", 50, 35);
+
+      try {
+          // --- Get the current data URL ---
+          // This call will be intercepted and modified by the extension's content script
+          const currentDataUrl = canvas.toDataURL();
+          outputElement.textContent = currentDataUrl.substring(0, 100) + "... (Length: " + currentDataUrl.length + ")";
+          console.log("Current Data URL:", currentDataUrl);
+
+          // --- Compare with previous result (if available) ---
+          if (previousDataUrl !== null) {
+              if (currentDataUrl === previousDataUrl) {
+                  // If they are the same, randomization failed
+                  comparisonElement.textContent = "FAILED: Output is the same as previous.";
+                  comparisonElement.style.color = "red";
+                  console.warn("Comparison: FAILED - Data URL did not change.");
+              } else {
+                  // If they are different, randomization succeeded
+                  comparisonElement.textContent = "SUCCESS: Output changed from previous.";
+                  comparisonElement.style.color = "green";
+                  console.log("Comparison: SUCCESS - Data URL changed.");
+              }
+          } else {
+              // First run, no previous value to compare against
+              comparisonElement.textContent = "First run. Click button to compare.";
+              comparisonElement.style.color = "black";
+              console.log("Comparison: First run.");
+          }
+
+          // --- Store the current result for the *next* comparison ---
+          previousDataUrl = currentDataUrl;
+
+      } catch (e) {
+          outputElement.textContent = "Error getting data URL: " + e.message;
+          comparisonElement.textContent = "Error during test.";
+          comparisonElement.style.color = "red";
+          console.error("Error:", e);
+          previousDataUrl = null; // Reset on error
+      }
+    }
+
+    // Run on load to get the initial value (won't compare yet)
+    window.onload = runTest;
+  </script>
+  <!-- End of Inline Script Block -->
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respect My Privacy</title>
+    <!-- Load external CSS -->
+    <link rel="stylesheet" href="popup.css">
+    <!-- Load Font Awesome icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1 class="title">Respect My Privacy</h1>
+        <p class="subtitle">Screw you guys, I'm blocking trackers!</p>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        <!-- Fingerprinting Protection Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fa-solid fa-fingerprint section-icon"></i>
+                Fingerprint Blocker
+            </h2>
+            <div class="toggle-row">
+                <div class="toggle-label">
+                    Canvas Protection
+                    <span id="fp-status" class="status disabled">Off</span>
+                </div>
+                <!-- Toggle switch implemented as a checkbox -->
+                <label class="toggle">
+                    <input type="checkbox" id="toggle-fp">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Tracker Blocking Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <i class="fa-solid fa-ban section-icon"></i>
+                Tracker Blocker
+            </h2>
+
+            <!-- Statistics Display (hidden if count is 0) -->
+            <div class="stats" id="stats-display" style="display: none;">
+                <span class="stats-number" id="block-count">0</span>
+                <span> trackers blocked on this page</span>
+            </div>
+
+            <!-- List of Blocked Trackers -->
+            <div class="tracker-list">
+                <ul id="blocked-list">
+                    <!-- Content populated by popup.js -->
+                    <li class="tracker-item">
+                        <i class="fa-solid fa-circle-info tracker-icon"></i>
+                        Loading trackers...
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        "They took our privacy!"
+ 
+        <div class="total-count">
+            Total Trackers Blocked:
+            <span id="total-block-count">?</span>
+        </div>
+
+    </div>
+
+
+    <script src="popup.js"></script>
+</body>
+</html>

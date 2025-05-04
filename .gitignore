@@ -1,0 +1,16 @@
+# Development
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Extension packaging
+*.zip
+*.crx
+*.pem
+_metadata/
+
+
+node_modules/
+npm-debug.log
