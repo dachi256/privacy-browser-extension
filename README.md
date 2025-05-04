@@ -38,3 +38,5 @@ The extension works automatically after installation. Click the extension icon t
 ## Testing
 
 The extension has been tested on various websites including news sites, e-commerce platforms, and social media, successfully blocking trackers and randomizing canvas fingerprints.
+
+..
